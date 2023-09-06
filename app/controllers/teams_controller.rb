@@ -61,7 +61,7 @@ class TeamsController < ApplicationController
 
   def owner_edit
     if current_user != @team.owner
-      redirect_to @team
+      redirect_to @team, notice: "権限がありません"
     end
   end
 end
