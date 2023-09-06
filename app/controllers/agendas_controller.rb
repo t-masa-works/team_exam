@@ -21,6 +21,16 @@ class AgendasController < ApplicationController
     end
   end
 
+  def destroy
+    set_agenda
+    if @agenda.destroy
+      DestroyMailer.destroy_mail(@agenda).deliver
+      redirect_to dashboard_url, notice:  "削除しました"
+    else
+      render :dashboard_url
+    end
+  end
+
   private
 
   def set_agenda
