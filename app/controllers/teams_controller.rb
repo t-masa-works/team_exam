@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: %i[show edit update destroy]
+  before_action :set_team, only: %i[show edit update destroy assign_owner]
   before_action :owner_edit, only: %i[edit]
 
   def index
@@ -18,6 +18,11 @@ class TeamsController < ApplicationController
   end
 
   def edit; end
+
+  def assign_owner
+    @team.update(owner_id: params[:owner_id])
+    redirect_to team_path, notice: 'オーナー権限が移動しました!'
+  end
 
   def create
     @team = Team.new(team_params)
